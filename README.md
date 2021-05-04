@@ -1,4 +1,4 @@
-# Zakaria-mac-ZakariaBelghit_6_03052021-
+# ZakariaBelghit_6_03052021-
 
 Creation of the back-end application of 'So Pekocko'.
 
