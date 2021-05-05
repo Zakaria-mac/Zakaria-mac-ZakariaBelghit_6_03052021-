@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 //Import mongoose pour faciliter les interactions avec la base de données MongoDB
 const mongoose = require('mongoose');
 
-//Import du router créé 
+//Import des routers créés
 const sauceRoutes = require('./routes/sauce')
+const userRoutes = require ('./routes/user');
 
 const app = express();
 
@@ -30,9 +31,9 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// Enregistre le routeur pour toutes les demandes effectuées vers /api/stuff
-app.use('/api/stuff', sauceRoutes)
-
+// Enregistre les routeurs pour toutes les demandes effectuées vers /api/stuff et /api/auth
+app.use('/api/stuff', sauceRoutes);
+app.use('/api/auth', userRoutes)
 
 
 module.exports = app;
