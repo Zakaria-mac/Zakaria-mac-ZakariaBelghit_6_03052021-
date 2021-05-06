@@ -4,11 +4,13 @@
 const Sauce = require('../models/Sauce');
 
 exports.createSauce = (req, res, next) => {
+    const sauceObject = JSON.parse(req.body.sauce);
     /* On enlève le champs id du corps de la requête avant de copier l'objet */
-    delete req.body._id;
+    delete sauceObject._id;
     /* Création d'une nouvelle instance du modèle Sauce */
     const sauce = new Sauce({
-        ...req.body
+        ...sauceObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //récupération des segments url de l'image --> Pour aiguyer le front-end
    }); 
    /* Utilisation de la méthode save() qui enregistre l'objet Sauce dans la base de données et retourne un Promise */
    sauce.save()

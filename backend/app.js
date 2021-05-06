@@ -7,8 +7,11 @@ const bodyParser = require('body-parser');
 //Import mongoose pour faciliter les interactions avec la base de données MongoDB
 const mongoose = require('mongoose');
 
+// Import node pour accéder au path du serveur
+const path = require('path');
+
 //Import des routers créés
-const sauceRoutes = require('./routes/sauce')
+const sauceRoutes = require('./routes/sauce');
 const userRoutes = require ('./routes/user');
 
 const app = express();
@@ -31,9 +34,14 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// Enregistre les routeurs pour toutes les demandes effectuées vers /api/stuff et /api/auth
-app.use('/api/stuff', sauceRoutes);
-app.use('/api/auth', userRoutes)
+/*  Requête faite à app.js pour servir la ressource 'images', et indiquer comment répondre aux requêtes envoyées à /images.
+    On rend le dossier 'images' statique (grâce au sous-répertoire du répertoire de base __dirname) à chaque fois qu'il 
+    reçoit une requête vers la route /images */
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Enregistre les routeurs pour toutes les demandes effectuées vers /api/sauce et /api/auth
+app.use('/api/sauces', sauceRoutes);
+app.use('/api/auth', userRoutes);
 
 
 module.exports = app;

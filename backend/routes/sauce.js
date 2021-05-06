@@ -6,13 +6,15 @@ const router = express.Router();
 const sauceCtrl = require('../controllers/sauce');
 
 //Import du middleware qui va sécuriser les routes 
-const auth = require('../middleware/auth' )
+const auth = require('../middleware/auth');
 
+//Import du middleware multer
+const multer = require('../middleware/multer-config');
 
 /* IMPLEMENTATION DU CRUD */
 
 // Méthode pour ajouter une nouvelle ressource/sauce
-router.post('/', auth, sauceCtrl.createSauce);
+router.post('/', auth, multer, sauceCtrl.createSauce);
 
 // Méthode qui permet de mettre à jour/modifier un objet sélectionné grâce à son id
 router.put('/:id', auth, sauceCtrl.modifySauce);
