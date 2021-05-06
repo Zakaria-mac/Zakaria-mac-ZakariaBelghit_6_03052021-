@@ -17,7 +17,7 @@ const multer = require('../middleware/multer-config');
 router.post('/', auth, multer, sauceCtrl.createSauce);
 
 // Méthode qui permet de mettre à jour/modifier un objet sélectionné grâce à son id
-router.put('/:id', auth, sauceCtrl.modifySauce);
+router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 
 // Méthode pour supprimer un objet
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
