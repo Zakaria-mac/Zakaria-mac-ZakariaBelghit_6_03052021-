@@ -11,21 +11,19 @@ const auth = require('../middleware/auth');
 //Import du middleware multer
 const multer = require('../middleware/multer-config');
 
+
 /* IMPLEMENTATION DU CRUD */
 
-// Méthode pour ajouter une nouvelle ressource/sauce
 router.post('/', auth, multer, sauceCtrl.createSauce);
 
-// Méthode qui permet de mettre à jour/modifier un objet sélectionné grâce à son id
+router.post('/:id/like', auth, multer, sauceCtrl.likeSauce)
+
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 
-// Méthode pour supprimer un objet
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
 
-//Affichage des détails d'une sauce sélectionnée
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 
-//Affichage des sauces 
 router.get('/', auth, sauceCtrl.getAllSauces);
 
 module.exports = router
