@@ -1,20 +1,37 @@
-//Installation du framework Express et import dans le fichier app.js
+// Installation du framework Express et import dans le fichier app.js
 const  express = require('express');
 
-//Import du bodyParser pour récupérer les données envoyées (POST) sous format JSON
+// Import du bodyParser pour récupérer les données envoyées (POST) sous format JSON
 const bodyParser = require('body-parser');
 
-//Import mongoose pour faciliter les interactions avec la base de données MongoDB
+// Import mongoose pour faciliter les interactions avec la base de données MongoDB
 const mongoose = require('mongoose');
 
 // Import node pour accéder au path du serveur
 const path = require('path');
+
+// Import de Helmet pour sécuriser le framework Express 
+const helmet = require('helmet')
+
+// Import de express-rate limiters 
+const rateLimit = require ('express-rate-limit')
 
 //Import des routers créés
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require ('./routes/user');
 
 const app = express();
+
+// Sécure le frameworks Express en mettant en place des Headers spécifiques dans les requêtes HTTP
+app.use(helmet());
+
+// Express.req.limit le nombre de tentative de connexion sur l'API
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max : 100
+});
+
+app.use('/api/', apiLimiter)
 
 mongoose.connect('mongodb+srv://OC_P6:OpenClassroomP6@cluster0.omsnt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     { useNewUrlParser: true,

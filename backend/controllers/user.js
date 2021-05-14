@@ -6,12 +6,23 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
+// Import du package pour masquer l'eamil
+const maskData = require('maskdata');
+
+const maskEmailOptions = {
+    maskWith : '*',
+    unmaskedStartCharactersBeforeAt : 2,
+    unmaskedEndCharactersAfterAt : 2,
+    maskAtTheRate : false,
+};
+
 exports.signup = (req, res, next) => {
 //Crypter grâce au hash le mot de passe
     bcrypt.hash(req.body.password, 10) // on appelle la fonction de hachage bcrypt et lui demande de saler 10 fois le mot de passe
         .then(hash => { // Utilisateur créé suite au hash généré
             const user = new User({
                 email: req.body.email,
+                emailMasked : maskData.maskEmail2(req.body.email, maskEmailOptions),
                 password: hash
             });
             user.save() // Enregistrement de l'utilisateur dans la base de donnée
@@ -34,7 +45,7 @@ exports.login = (req, res, next) => {
                 } 
                 res.status(200).json({ 
                     userId: user._id,
-                    token: jwt.sign( // Encodage d'un nouvea token
+                    token: jwt.sign( // Encodage d'un nouveau token
                         { userId : user._id }, // le token qui sera généré contient l'ID de l'utilisateur en tant que payload
                         'RANDOM_TOKEN_SECRET_PROJECT_OPENCLASSROOM',
                         { expiresIn: '24h'}
