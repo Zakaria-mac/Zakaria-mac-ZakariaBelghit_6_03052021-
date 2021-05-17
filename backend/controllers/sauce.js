@@ -49,12 +49,11 @@ exports.likeSauce = (req, res, next) => {
             }        
             sauce.usersLiked = sauce.usersLiked.filter((item) => console.log(item) || item.toString() !== req.body.userId )
             sauce.usersDisliked = sauce.usersDisliked.filter((item) => item.toString() !== req.body.userId )
-            console.log(sauce.usersLiked)
         }
         return sauce.save()
     })
     
-        .then(() => res.status(201).json({ message : 'Objet liké'}))
+        .then(() => res.status(201).json({ message : 'Objet liké ou non liké'}))
         .catch(error => res.status(400).json({ error }))   
 };
             
