@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 //Import du package qui génère des TOKEN et les vérifie 
 const jwt = require('jsonwebtoken');
 
+const dotenv = require ('dotenv').config()
+
 const User = require('../models/User');
 
 // Import du package pour masquer l'eamil
@@ -33,6 +35,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+    const checkToken = process.env.DB_JWT_TOKEN
     User.findOne({ email: req.body.email }) //Récupération l'utilisateur de la base de donnée qui correspond à l'adresse e-mail entrée
         .then( user => {
             if (!user){
@@ -47,7 +50,7 @@ exports.login = (req, res, next) => {
                     userId: user._id,
                     token: jwt.sign( // Encodage d'un nouveau token
                         { userId : user._id }, // le token qui sera généré contient l'ID de l'utilisateur en tant que payload
-                        'RANDOM_TOKEN_SECRET_PROJECT_OPENCLASSROOM',
+                        checkToken,
                         { expiresIn: '24h'}
                     )
                 }); // Si la comparaison est bonne, on renvoie son userId et un TOKEN d'authentification

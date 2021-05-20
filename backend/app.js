@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 // Import mongoose pour faciliter les interactions avec la base de données MongoDB
 const mongoose = require('mongoose');
 
+// Import initDB
+const initDB = require('./initDB')()
+
 // Import node pour accéder au path du serveur
 const path = require('path');
 
@@ -32,12 +35,6 @@ const apiLimiter = rateLimit({
 });
 
 app.use('/api/', apiLimiter)
-
-mongoose.connect('mongodb+srv://OC_P6:OpenClassroomP6@cluster0.omsnt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    { useNewUrlParser: true,
-      useUnifiedTopology:true })
-      .then(() => console.log("Connexion à MongoDB réussie"))
-      .catch(() => console.log("Connexion à MongoDB échouée"))
 
 /*  Middleware créé pour ajouter les Headers nécessaire pour la requête GET;
     Middleware ne prend pas d'addrese en premier paramètre pour s'appliquer à toutes les routes;
