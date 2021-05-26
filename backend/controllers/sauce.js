@@ -5,8 +5,6 @@ const Sauce = require('../models/Sauce');
 
 /* Import de fileSystem de node pour avoir accès aux différentes opérations liées au système de fichier */
 const fs = require('fs');
-const { resolveSoa } = require('dns');
-
 
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);

@@ -4,12 +4,16 @@ const mongoose = require ('mongoose');
  -> Obj : avoir un à chaque fois un email unique */
 
 const uniqueValidator = require ('mongoose-unique-validator')
+const maskdata = require('maskdata')
 
 const userSchema = mongoose.Schema({
-    email : { type : String, required : true, unique: true },
-    emailMasked : { type : String, required : true, unique: true },
+    email : { type : String, required : true, unique: true , get: getMaskEmail},
     password : { type: String, required: true}
 });
+
+function getMaskEmail(email){
+    return maskdata.maskEmail2(email)
+}
 
 userSchema.plugin(uniqueValidator);
 

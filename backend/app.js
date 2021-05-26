@@ -39,6 +39,7 @@ app.use('/api/', apiLimiter)
 /*  Middleware créé pour ajouter les Headers nécessaire pour la requête GET;
     Middleware ne prend pas d'addrese en premier paramètre pour s'appliquer à toutes les routes;
     Permet à toutes les demandes d'accéder à l'API; */
+    
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
