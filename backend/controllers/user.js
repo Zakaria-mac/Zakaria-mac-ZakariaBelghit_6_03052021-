@@ -19,7 +19,6 @@ owasp.config({
   });
 
 
-
 exports.signup = (req, res, next) => {
     if(!owasp.test(req.body.password).strong){
         res.status(400).json({error: 'Veuillez mettre un mot de passe plus fort'})
